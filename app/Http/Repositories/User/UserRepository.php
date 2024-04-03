@@ -53,7 +53,6 @@ class UserRepository implements UserRepositoryInterface
 
             $params['image'] = $imageName;
         }
-        $params['password'] = Hash::make($params['password']);
         $user = User::find($id);
         return $user->update($params);
     }
