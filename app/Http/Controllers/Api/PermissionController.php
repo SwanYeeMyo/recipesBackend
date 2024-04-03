@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseApiController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Permission\PermissionRepositoryInterface;
+use App\Http\Requests\Permission\PermissionRequest;
 
 class PermissionController extends BaseApiController
 {
@@ -41,10 +42,10 @@ class PermissionController extends BaseApiController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PermissionRequest $request)
     {
         try {
-            $permission = $this->permissionRepository->create($request->all());
+            $permission = $this->permissionRepository->create($request->validated());
             return $this->success($permission, 'Permisssion Created', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -83,7 +84,7 @@ class PermissionController extends BaseApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PermissionRequest $request, string $id)
     {
         try {
             $permission = $this->permissionRepository->update($request->all(), $id);

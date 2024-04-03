@@ -11,24 +11,23 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Http\Controllers\BaseApiController;
+use App\Http\Requests\Account\RegisterRequest;
 
 class RegisterController extends BaseApiController
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', Password::default(), 'confirmed'],
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-        ])->validate();
-
         try {
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ];
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+
+            if (isset($data['image'])) {
+                $imageName = uniqid() . '.' . $data['image']->getClientOriginalExtension();
+
+                $data['image']->move(public_path('storage/user'), $imageName);
+
+                $data['image'] = $imageName;
+            }
 
             $user = User::create($data);
             return $this->success($user, 'Register Success', 201);

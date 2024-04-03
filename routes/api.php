@@ -31,4 +31,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::post('users/{id}/update', [UserController::class, 'updateUser'])->name('users.update');
+    Route::post('users/changePassword', [UserController::class, 'ChangePassword'])->name('users.changePassword');
 });

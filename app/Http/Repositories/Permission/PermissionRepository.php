@@ -14,6 +14,7 @@ class PermissionRepository implements PermissionRepositoryInterface
 
     public function create(array $params): Permission
     {
+        $params['guard_name'] = $params['guard_name'] ?? 'web';
         return Permission::create($params);
     }
 

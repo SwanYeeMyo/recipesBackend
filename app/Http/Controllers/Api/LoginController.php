@@ -10,13 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends BaseApiController
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
-
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
@@ -27,9 +22,10 @@ class LoginController extends BaseApiController
                 return $this->success($user, 'Login Success', 201);
             } catch (Exception $e) {
                 Log::error($e->getMessage());
-
                 return $this->error($user, '', 500);
             }
+        } else {
+            return $this->error(null, 'credentials does not match', 500);
         }
     }
 }

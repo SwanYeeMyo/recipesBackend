@@ -4,6 +4,7 @@ namespace App\Http\Repositories\User;
 
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,8 @@ class UserRepository implements UserRepositoryInterface
 
     public function create(array $params): User
     {
-        if ($params['image']) {
+        if (isset($params['image'])) {
+            dd('here');
             $imageName = uniqid() . '.' . $params['image']->getClientOriginalExtension();
 
             $params['image']->move(public_path('storage/user'), $imageName);
@@ -25,16 +27,8 @@ class UserRepository implements UserRepositoryInterface
             $params['image'] = $imageName;
         }
         $params['password'] = Hash::make($params['password']);
-        $data = [
-            'name' => $params['name'],
-            'email' => $params['email'],
-            'password' => $params['password'],
-            'image' => $params['image'],
-            'gender' => $params['gender'],
-        ];
-
         $role = Role::where('id', $params['role_id'])->first();
-        $user = User::create($data);
+        $user = User::create($params);
         return $user->assignRole($role);
     }
 
@@ -45,7 +39,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function update(array $params, $id)
     {
-        if ($params['image']) {
+        if (isset($params['image'])) {
             $oldImage = User::where('id', $id)->first();
             $oldImage = $oldImage->image;
 
@@ -60,11 +54,17 @@ class UserRepository implements UserRepositoryInterface
             $params['image'] = $imageName;
         }
         $params['password'] = Hash::make($params['password']);
-        return User::where('id', $id)->update($params);
+        $user = User::find($id);
+        return $user->update($params);
     }
 
     public function delete($id)
     {
         return User::where('id', $id)->delete();
+    }
+
+    public function changePassword(array $params)
+    {
+        return User::where('id', Auth::user()->id)->update(['password' => Hash::make($params['newPassword'])]);
     }
 }

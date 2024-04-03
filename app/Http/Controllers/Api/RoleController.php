@@ -54,7 +54,7 @@ class RoleController extends BaseApiController
     public function store(RoleRequest $request)
     {
         try {
-            $role = $this->roleRepository->create($request->all());
+            $role = $this->roleRepository->create($request->validated());
             return $this->success($role, 'Role created', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -96,7 +96,7 @@ class RoleController extends BaseApiController
     public function update(RoleRequest $request, string $id)
     {
         try {
-            $role = $this->roleRepository->update($request->all(), $id);
+            $role = $this->roleRepository->update($request->validated(), $id);
             return $this->success($role, 'Role Updated', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());

@@ -7,8 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Repositories\Role\RoleRepositoryInterface;
 use App\Http\Repositories\User\UserRepository;
 use App\Http\Repositories\User\UserRepositoryInterface;
+use App\Http\Requests\User\ChangePasswordRequest;
+use App\Http\Requests\User\UserRequest;
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends BaseApiController
@@ -54,15 +61,15 @@ class UserController extends BaseApiController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         try {
-            $user = $this->userRepository->create($request->all());
-            return $this->success($user, 'User Created', 200);
+            $user = $this->userRepository->create($request->validated());
+            return $this->success($user, 'User Created', 201);
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
-            return $this->error($user, '', 500);
+            return $this->error('can\'t create user', '', 500);
         }
     }
 
@@ -99,11 +106,11 @@ class UserController extends BaseApiController
     /**
      * Update the specified resource in storage.
      */
-    public function updateUser(Request $request, string $id)
+    public function updateUser(UserUpdateRequest $request, string $id)
     {
         try {
-            $user = $this->userRepository->update($request->all(), $id);
-            return $this->success($user, 'User Updated', 200);
+            $user = $this->userRepository->update($request->validated(), $id);
+            return $this->success($user, 'User Updated', 201);
         } catch (Exception $e) {
             Log::error($e->getMessage());
 
@@ -123,6 +130,27 @@ class UserController extends BaseApiController
             Log::error($e->getMessage());
 
             return $this->error($user, '', 500);
+        }
+    }
+
+    public function ChangePassword(ChangePasswordRequest $request)
+    {
+        $user = User::select('password')->where('id', Auth::user()->id)->first();
+        $dbpassword = $user->password;
+        $userOldPassword = $request->oldPassword;
+        if (Hash::check($userOldPassword, $dbpassword)) {
+            try {
+                $password = $this->userRepository->changePassword($request->validated());
+                Auth::guard('web')->logout();
+                $request->user()->currentAccessToken()->delete();
+                return $this->success($password, 'Password changed', 201);
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
+
+                return $this->error($password, '', 500);
+            }
+        } else {
+            return $this->error(null, 'password does not match', 500);
         }
     }
 }

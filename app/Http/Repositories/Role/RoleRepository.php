@@ -14,8 +14,8 @@ class RoleRepository implements RoleRepositoryInterface
 
     public function create(array $params): Role
     {
-        // dd($params['name']);
-        $role = Role::create(['name' => $params['name']]);
+        $params['guard_name'] = $params['guard_name'] ?? 'web';
+        $role = Role::create($params);
         $role->syncPermissions($params['permission']);
         return $role;
     }
@@ -28,7 +28,7 @@ class RoleRepository implements RoleRepositoryInterface
     public function update(array $params, $id)
     {
         $role = Role::find($id);
-        $role->update(['name' => $params['name']]);
+        $role->update($params);
         $role->syncPermissions($params['permission']);
         return $role;
     }
