@@ -30,6 +30,7 @@ class RegisterController extends BaseApiController
             }
 
             $user = User::create($data);
+            return $user->assignRole('user');
             return $this->success($user, 'Register Success', 201);
         } catch (Exception $e) {
             Log::error($e->getMessage());
