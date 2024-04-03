@@ -13,13 +13,12 @@ class UserRepository implements UserRepositoryInterface
 {
     public function getUser(): Collection
     {
-        return User::get()->toBase();
+        return User::with('roles')->get()->toBase();
     }
 
     public function create(array $params): User
     {
         if (isset($params['image'])) {
-            dd('here');
             $imageName = uniqid() . '.' . $params['image']->getClientOriginalExtension();
 
             $params['image']->move(public_path('storage/user'), $imageName);
@@ -34,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function findUser($id): User
     {
-        return User::where('id', $id)->first();
+        return User::with('roles')->where('id', $id)->first();
     }
 
     public function update(array $params, $id)
