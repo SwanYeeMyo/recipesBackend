@@ -7,21 +7,21 @@ use Illuminate\Http\Request;
 
 class BaseApiController extends Controller
 {
-    public function success($code, $message=null, $data=null) : JsonResponse
+    public function success($data, $message=null, $code) : JsonResponse
     {
         return response()->json([
-            'status' => $code,
+            'data' => $data,
             'message' => $message,
-            'data' => $data
+            'status' => $code,
         ]);
     }
 
-    public function error($code, $message=null, $data=null) : JsonResponse
+    public function error($data, $message=null, $code) : JsonResponse
     {
         return response()->json([
-            'status' => $code,
+            'data' => $data,
             'message' => $message ?? 'Error Occur',
-            'data' => $data
+            'status' => $code,
         ]);
     }
 }

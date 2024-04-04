@@ -64,3 +64,4 @@ class RecipeRepository implements RecipeRepositoryInterface {
         Recipe::find($id)->delete();
     }
 }
+

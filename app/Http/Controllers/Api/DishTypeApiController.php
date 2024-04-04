@@ -19,30 +19,30 @@ class DishTypeApiController extends BaseApiController
     public function index()
     {
         $dishTypes = $this->dishTypeRepository->index();
-        return $this->success(200, 'OK', $dishTypes);
+        return $this->success($dishTypes, 'OK', 200);
     }
 
     public function store(StoreRequest $request)
     {
         $dishType = $this->dishTypeRepository->store($request->validated());
-        return $this->success(201, 'Created', $dishType);
+        return $this->success($dishType, 'Created', 200);
     }
 
     public function show(int $id)
     {
         $dishType = $this->dishTypeRepository->findById($id);
-        return $this->success(200, 'OK', $dishType);
+        return $this->success($dishType, 'OK', 200);
     }
 
     public function update(UpdateRequest $request, int $id)
     {
         $dishType = $this->dishTypeRepository->update($request->validated(), $id);
-        return $this->success(201, 'Updated', $dishType);
+        return $this->success($dishType, 'Updated', 201);
     }
 
     public function destroy(int $id)
     {
         $this->dishTypeRepository->delete($id);
-        return $this->success(200, 'Deleted');
+        return $this->success('','Deleted', 200);
     }
 }
