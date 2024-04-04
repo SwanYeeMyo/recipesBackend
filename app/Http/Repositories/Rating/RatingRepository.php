@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Repositories\Rating;
 
-use App\Models\Rating;
+use App\Models\Rating; 
 
 class RatingRepository implements RatingRepositoryInterface {
     public function index() {

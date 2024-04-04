@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\DirectionApiController;
+use App\Http\Controllers\Api\IngredientApiController;
 use App\Http\Controllers\Api\RatingApiController;
 use App\Http\Controllers\Api\ReviewApiController;
 use Illuminate\Http\Request;
@@ -22,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('ratings', RatingApiController::class);
 Route::resource('reviews',ReviewApiController::class);
+Route::resource('ingredients',IngredientApiController::class);
+Route::resource('directions', DirectionApiController::class);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Rating\RatingRepository;
+use App\Http\Requests\Rating\RatingRequest;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -27,7 +28,7 @@ class RatingApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RatingRequest $request)
     {
         // dd($request->all());
         // if(!Gate::allows("rating_create")){
@@ -52,7 +53,7 @@ class RatingApiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(RatingRequest $request, string $id)
     {
 
         // if(!Gate::allows("rating_update")){

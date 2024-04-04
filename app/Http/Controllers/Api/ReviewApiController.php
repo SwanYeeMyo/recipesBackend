@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\Review\ReviewRepository;
+use App\Http\Requests\Review\ReviewRequest;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -31,7 +32,7 @@ class ReviewApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ReviewRequest $request)
     {
         // if(!Gate::allows('review_create')) {
         //     return abort(401);
@@ -55,7 +56,7 @@ class ReviewApiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ReviewRequest $request, string $id)
     {
         // if(!Gate::allows('review_update')) {
         //     return abort(401);
