@@ -2,14 +2,13 @@
 
 namespace App\Http\Repositories\Recipe;
 
-use App\Models\DishType;
 use App\Models\Image;
 use App\Models\Recipe;
 
 class RecipeRepository implements RecipeRepositoryInterface {
 
     public function index() {
-        return Recipe::with('images')->get();
+        return Recipe::with('images', 'dish_types')->get();
     }
 
     public function store(array $requests) {
