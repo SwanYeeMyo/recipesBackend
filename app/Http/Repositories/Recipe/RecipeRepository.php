@@ -8,7 +8,7 @@ use App\Models\Recipe;
 class RecipeRepository implements RecipeRepositoryInterface {
 
     public function index() {
-        return Recipe::all();
+        return Recipe::with('images', 'dish_types')->get();
     }
 
     public function store(array $requests) {
@@ -20,9 +20,12 @@ class RecipeRepository implements RecipeRepositoryInterface {
             "cook_time" => $requests['cook_time'],
             "prep_time" => $requests['prep_time'],
             "serving" => $requests['serving'],
-            "type" => $requests['type'],
             "user_id" => $requests['user_id'],
         ]);
+
+        $dish_type_ids = $requests['types'];
+        $recipe->dish_types()->attach($dish_type_ids);
+
         return $recipe;
     }
 
@@ -47,9 +50,13 @@ class RecipeRepository implements RecipeRepositoryInterface {
             "cook_time" => $requests['cook_time'],
             "prep_time" => $requests['prep_time'],
             "serving" => $requests['serving'],
-            "type" => $requests['type'],
             "user_id" => $requests['user_id'],
         ]);
+
+        $dish_type_ids = $requests['types'];
+        $recipe->dish_types()->sync($dish_type_ids);
+        // sync function replace old data with new ones
+
         return $recipe;
     }
 
