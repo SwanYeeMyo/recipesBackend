@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+
+use App\Http\Repositories\Review\ReviewRepository;
+use App\Http\Repositories\Review\ReviewRepositoryInterface;
+
 use App\Http\Repositories\Recipe\RecipeRepository;
 use App\Http\Repositories\Recipe\RecipeRepositoryInterface;
+
 use Illuminate\Support\ServiceProvider;
 use App\Http\Repositories\Role\RoleRepository;
 use App\Http\Repositories\User\UserRepository;
@@ -20,10 +25,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
 
+
         $this->app->bind(RecipeRepositoryInterface::class, RecipeRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(PermissionRepositoryInterface::class, PermissionRepository::class);
         $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
+
     }
 
     /**

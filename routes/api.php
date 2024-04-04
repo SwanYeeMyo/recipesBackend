@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\DirectionApiController;
+use App\Http\Controllers\Api\IngredientApiController;
+use App\Http\Controllers\Api\RatingApiController;
+use App\Http\Controllers\Api\ReviewApiController;
 use App\Http\Controllers\Api\RecipeApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::resource('ratings', RatingApiController::class);
+Route::resource('reviews',ReviewApiController::class);
+Route::resource('ingredients',IngredientApiController::class);
+Route::resource('directions', DirectionApiController::class);
 
 Route::resource('recipes', RecipeApiController::class);
 Route::post('login', [LoginController::class, 'login']);
@@ -36,3 +44,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('users/changePassword', [UserController::class, 'ChangePassword'])->name('users.changePassword');
     Route::post('recipes/{id}/update', [RecipeApiController::class, 'update']);
 });
+
