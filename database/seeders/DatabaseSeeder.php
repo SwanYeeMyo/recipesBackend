@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +20,15 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        $this->call(RatingSeeder::class);
+        $this->call(ReviewSeeder::class);
+        $this->call(IngredientSeeder::class);
+        $this->call(DirectionSeeder::class);
+
+
+
         $this->call(RecipeSeeder::class);
+
         $this->call(DishTypeSeeder::class);
     }
 }

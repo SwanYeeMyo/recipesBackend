@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+
+use App\Http\Repositories\Review\ReviewRepository;
+use App\Http\Repositories\Review\ReviewRepositoryInterface;
 use App\Http\Repositories\Recipe\RecipeRepository;
 use App\Http\Repositories\Recipe\RecipeRepositoryInterface;
 use App\Http\Repositories\DishType\DishTypeRepositoryInterface;
@@ -21,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+
 
         $this->app->bind(RecipeRepositoryInterface::class, RecipeRepository::class);
 
