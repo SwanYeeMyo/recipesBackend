@@ -32,12 +32,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('ratings', RatingApiController::class);
-Route::resource('reviews',ReviewApiController::class);
-Route::resource('ingredients',IngredientApiController::class);
+Route::resource('reviews', ReviewApiController::class);
+Route::resource('ingredients', IngredientApiController::class);
 Route::resource('directions', DirectionApiController::class);
 
 Route::resource('recipes', RecipeApiController::class);
-Route::resource('dishTypes', DishTypeApiController::class);
+// Route::resource('dishTypes', DishTypeApiController::class);
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('users/{id}/update', [UserController::class, 'updateUser'])->name('users.update');
     Route::post('users/changePassword', [UserController::class, 'ChangePassword'])->name('users.changePassword');
     Route::post('recipes/{id}/update', [RecipeApiController::class, 'update']);
+    // Route::resource('dishTypes', DishTypeApiController::class);
 
 
-
+});

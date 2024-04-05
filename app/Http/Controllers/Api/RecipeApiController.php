@@ -14,7 +14,8 @@ class RecipeApiController extends BaseApiController
 {
     private $recipeService;
 
-    public function __construct(RecipeService $recipeService) {
+    public function __construct(RecipeService $recipeService)
+    {
 
         $this->recipeService = $recipeService;
     }
@@ -28,10 +29,10 @@ class RecipeApiController extends BaseApiController
 
     public function store(StoreRequest $request)
     {
+        dd($request->all());
         try {
             $recipe = $this->recipeService->store($request->validated());
             return $this->success(201, 'Created', $recipe);
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return $this->error(500);

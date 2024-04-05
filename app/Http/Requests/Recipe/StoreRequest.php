@@ -25,13 +25,13 @@ class StoreRequest extends FormRequest
             'title' => ['required', 'string'],
             'author_note' => ['string', 'nullable'],
             'kitchen_note' => ['string', 'nullable'],
-            'cook_time' => ['required','integer'],
+            'cook_time' => ['required', 'integer'],
             'prep_time' => ['required', 'integer'],
             'serving' => ['required', 'integer'],
             'types' => ['required', 'array'],
             'types.*' => ['exists:dish_types,id'], // Ensure each ID exists in the dish_types table
             'user_id' => ['required', 'integer'],
-            'images.*' => ['required','image', 'mimes:jpeg,png,jpg,gif','max:2048'],
+            'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ];
     }
 }

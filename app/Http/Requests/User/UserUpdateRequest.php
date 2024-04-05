@@ -29,7 +29,7 @@ class UserUpdateRequest extends FormRequest
             'image' => ['nullable', 'image'],
             'gender' => ['required'],
             'type' => ['required'],
-            'role_id' => ['required'],
+            // 'role_id' => ['required'],
         ];
     }
 }

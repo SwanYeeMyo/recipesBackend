@@ -23,9 +23,13 @@ class DishTypeSeeder extends Seeder
             "Indian",
             "Japanese",
             "European",
+            "salad",
+            "meal",
+            'Drinks',
+            'Desserts'
         ];
 
-        foreach($types as $type) {
+        foreach ($types as $type) {
             DishType::create([
                 'name' => $type,
             ]);
