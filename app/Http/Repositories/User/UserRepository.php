@@ -52,8 +52,10 @@ class UserRepository implements UserRepositoryInterface
 
             $params['image'] = $imageName;
         }
+        $role = Role::where('id', $params['role_id'])->first();
         $user = User::find($id);
-        return $user->update($params);
+        $user->update($params);
+        return $user->syncRoles($role);
     }
 
     public function delete($id)
