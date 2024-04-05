@@ -28,12 +28,13 @@ class RecipeApiController extends BaseApiController
     public function store(StoreRequest $request)
     {
         try {
+            // dd($request->all());
             $recipe = $this->recipeService->store($request->validated());
             return $this->success($recipe, 'Created', 201);
 
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return $this->error($recipe, '', 500);
+            return $this->error("", $e->getMessage(), 500);
         }
     }
 
@@ -51,7 +52,7 @@ class RecipeApiController extends BaseApiController
             return $this->success($recipe, 'Updated', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return $this->error($recipe, '', 500);
+            return $this->error("", $e->getMessage(), 500);
         }
     }
 

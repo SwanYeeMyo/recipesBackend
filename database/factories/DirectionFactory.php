@@ -18,7 +18,7 @@ class DirectionFactory extends Factory
     {
         return [
             'step' => $this->faker->name(),
-            'recipe_id' => $this->faker->numberBetween(1, 15),
+            'recipe_id' => $this->faker->numberBetween(1, 3),
         ];
     }
 }
