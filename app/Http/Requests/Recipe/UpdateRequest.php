@@ -32,6 +32,10 @@ class UpdateRequest extends FormRequest
             'types.*' => ['exists:dish_types,id'], // Ensure each ID exists in the dish_types table
             'user_id' => ['required', 'integer'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif','max:2048'],
+            'ingredients' => ['required', 'array'],
+            'ingredients.*' => ['required'],
+            'steps' => ['required', 'array'],
+            'steps.*' => ['required', 'string'],
         ];
     }
 }

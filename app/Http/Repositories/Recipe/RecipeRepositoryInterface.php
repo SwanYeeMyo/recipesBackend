@@ -12,7 +12,7 @@ interface RecipeRepositoryInterface {
 
     public function findById(int $id);
 
-    public function update(array $requests, int $id);
+    // public function update(array $requests, int $id);
 
     public function delete(int $id);
 }

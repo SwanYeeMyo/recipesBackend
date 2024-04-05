@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Recipe\StoreRequest;
 use App\Http\Services\Recipe\RecipeService;
 use App\Http\Controllers\BaseApiController;
@@ -23,18 +22,19 @@ class RecipeApiController extends BaseApiController
     {
         $recipes = $this->recipeService->index();
 
-        return $this->success(200, 'OK', $recipes);
+        return $this->success($recipes, 'OK', 200);
     }
 
     public function store(StoreRequest $request)
     {
         try {
+            // dd($request->all());
             $recipe = $this->recipeService->store($request->validated());
-            return $this->success(201, 'Created', $recipe);
+            return $this->success($recipe, 'Created', 201);
 
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return $this->error(500);
+            return $this->error("", $e->getMessage(), 500);
         }
     }
 
@@ -42,28 +42,28 @@ class RecipeApiController extends BaseApiController
     {
         $recipe = $this->recipeService->findById($id);
 
-        return $recipe ? $this->success(200, 'OK', $recipe) : $this->error(404, 'Id Not Found', $recipe);
+        return $recipe ? $this->success($recipe, 'OK', 200) : $this->error($recipe, 'Id Not Found', 404);
     }
 
     public function update(UpdateRequest $request, int $id)
     {
         try {
             $recipe = $this->recipeService->update($request->validated(), $id);
-            return $this->success(200, 'Updated', $recipe);
+            return $this->success($recipe, 'Updated', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return $this->error(500);
+            return $this->error("", $e->getMessage(), 500);
         }
     }
 
     public function destroy(int $id)
     {
         try {
-            $this->recipeService->delete($id);
-            return $this->success(200, 'Deleted');
+            $recipe = $this->recipeService->delete($id);
+            return $this->success($recipe, 'Deleted', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return $this->error(500);
+            return $this->error($recipe, '', 500);
         }
     }
 }
