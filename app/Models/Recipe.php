@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class Recipe extends Model
 {
@@ -22,5 +23,13 @@ class Recipe extends Model
     public function dish_types()
     {
         return $this->belongsToMany(DishType::class);
+    }
+    public function ingredients()
+    {
+        return $this->hasMany(Ingredient::class);
+    }
+    public function directions()
+    {
+        return $this->hasMany(Direction::class);
     }
 }

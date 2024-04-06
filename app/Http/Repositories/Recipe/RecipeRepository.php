@@ -5,13 +5,16 @@ namespace App\Http\Repositories\Recipe;
 use App\Models\Image;
 use App\Models\Recipe;
 
-class RecipeRepository implements RecipeRepositoryInterface {
+class RecipeRepository implements RecipeRepositoryInterface
+{
 
-    public function index() {
+    public function index()
+    {
         return Recipe::with('images', 'dish_types')->get();
     }
 
-    public function store(array $requests) {
+    public function store(array $requests)
+    {
 
         $recipe = Recipe::create([
             "title" => $requests['title'],
@@ -29,18 +32,21 @@ class RecipeRepository implements RecipeRepositoryInterface {
         return $recipe;
     }
 
-    public function recipeImage($name, $recipe_id) {
+    public function recipeImage($name, $recipe_id)
+    {
         Image::create([
             "name" => $name,
             "recipe_id" => $recipe_id,
         ]);
     }
 
-    public function findById(int $id) {
-        return Recipe::find($id);
+    public function findById(int $id)
+    {
+        return Recipe::with('images', 'dish_types', 'ingredients', 'directions')->where('id', $id)->get();
     }
 
-    public function update(array $requests, int $id) {
+    public function update(array $requests, int $id)
+    {
         $recipe = $this->findById($id);
 
         $recipe->update([
@@ -60,7 +66,8 @@ class RecipeRepository implements RecipeRepositoryInterface {
         return $recipe;
     }
 
-    public function delete(int $id) {
+    public function delete(int $id)
+    {
         Recipe::find($id)->delete();
     }
 }

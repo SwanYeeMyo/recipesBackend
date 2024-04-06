@@ -37,7 +37,7 @@ Route::resource('ingredients', IngredientApiController::class);
 Route::resource('directions', DirectionApiController::class);
 
 Route::resource('recipes', RecipeApiController::class);
-// Route::resource('dishTypes', DishTypeApiController::class);
+Route::resource('dishTypes', DishTypeApiController::class);
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
