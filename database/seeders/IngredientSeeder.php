@@ -13,6 +13,6 @@ class IngredientSeeder extends Seeder
      */
     public function run(): void
     {
-        Ingredient::factory(10)->create();
+        Ingredient::factory(2)->create();
     }
 }

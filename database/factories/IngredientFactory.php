@@ -20,7 +20,7 @@ class IngredientFactory extends Factory
             'qty' => rand(1, 20),
             'measurement' => $this->faker->word(),
             'name' => $this->faker->name(),
-            'recipe_id' => $this->faker->numberBetween(1, 3),
+            'recipe_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 }

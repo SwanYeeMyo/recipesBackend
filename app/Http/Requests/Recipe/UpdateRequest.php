@@ -35,7 +35,6 @@ class UpdateRequest extends FormRequest
             'ingredients' => ['required', 'array'],
             'ingredients.*' => ['required'],
             'steps' => ['required', 'array'],
-            'steps.*' => ['required', 'string'],
         ];
     }
 }
