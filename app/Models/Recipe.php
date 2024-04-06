@@ -24,12 +24,4 @@ class Recipe extends Model
     {
         return $this->belongsToMany(DishType::class);
     }
-    public function ingredients()
-    {
-        return $this->hasMany(Ingredient::class);
-    }
-    public function directions()
-    {
-        return $this->hasMany(Direction::class);
-    }
 }

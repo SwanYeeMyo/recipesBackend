@@ -42,7 +42,7 @@ class RecipeRepository implements RecipeRepositoryInterface
 
     public function findById(int $id)
     {
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions')->where('id', $id)->get();
+        return Recipe::with('images', 'dish_types')->where('id', $id)->get();
     }
 
     public function update(array $requests, int $id)
