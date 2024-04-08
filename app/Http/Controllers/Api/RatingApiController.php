@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseApiController;
 use App\Http\Repositories\Rating\RatingRepository;
 use App\Http\Requests\Rating\RatingRequest;
-use App\Models\Rating;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
-class RatingApiController extends Controller
+class RatingApiController extends BaseApiController
 {
     private $ratingRepository;
     public function __construct (RatingRepository $ratingRepository){
@@ -18,60 +17,37 @@ class RatingApiController extends Controller
     }
     public function index()
     {
-        // if(!Gate::allows("rating_list")){
-        //     abort(403);
-        // }
-        $rating = $this->ratingRepository->index();
-        return response()->json($rating);
+        $ratings = $this->ratingRepository->index();
+        return $this->success($ratings, 'OK', 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(RatingRequest $request)
     {
-        // dd($request->all());
-        // if(!Gate::allows("rating_create")){
-        //     abort(403);
-        // }
-        $data = $this->ratingRepository->store($request);
-        return response()->json($data);
+        try {
+            $rating = $this->ratingRepository->store($request->validated());
+            return $this->success($rating, 'Created', 201);
+
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error("", $e->getMessage(), 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(int $id)
     {
-        // if(!Gate::allows("rating_show")){
-        //     abort(403);
-        // }
-        $data = $this->ratingRepository->show($id);
-        return response()->json($data);
+        $rating = $this->ratingRepository->findById($id);
+        return $this->success($rating, 'OK', 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(RatingRequest $request, string $id)
     {
-
-        // if(!Gate::allows("rating_update")){
-        //     abort(403);
-        // }
-        $data = $this->ratingRepository->update($request, $id);
-        return response()->json($data, 200);
+        $rating = $this->ratingRepository->update($request->validated(), $id);
+        return $this->success($rating, 'Updated', 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        // if(!Gate::allows("rating_delete")){
-        //     abort(403);
-        // }
-        $this->ratingRepository->destroy($id);
-        return response()->json(null, 204);
+        $rating = $this->ratingRepository->destroy($id);
+        return $this->success($rating, 'Deleted', 200);
     }
 }

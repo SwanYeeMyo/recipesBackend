@@ -1,30 +1,29 @@
 <?php
 namespace App\Http\Repositories\Rating;
 
-use App\Models\Rating; 
+use App\Models\Rating;
 
 class RatingRepository implements RatingRepositoryInterface {
     public function index() {
+        return Rating::all();
+    }
 
-        return $data = Rating::all();
-    }
     public function store($request) {
-       return $data = Rating::create($request->all());
+       return Rating::create($request);
     }
-    public function show($id) {
-        return $data = Rating::find($id);
+
+    public function findById(int $id)
+    {
+        return Rating::find($id);
     }
+
     public function update($request, $id) {
-                // dd($request);
-                $data = Rating::find($id);
-                $data->update($request->all());
-                // $data->update([
-                //     'rating' => $request['rating'],
-                //     'recipe_id' => $request['recipe_id'],
-                //     'user_id' => $request['user_id'],
-                // ]);
-                return $data;
+
+        $data = Rating::find($id);
+        $data->update($request);
+        return $data;
     }
+
     public function destroy($id) {
         Rating::find($id)->delete();
     }
