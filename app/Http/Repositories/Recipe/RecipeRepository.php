@@ -10,7 +10,7 @@ use App\Models\Recipe;
 class RecipeRepository implements RecipeRepositoryInterface {
 
     public function index() {
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->get();
+        return Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->get();
     }
 
     public function store(array $requests) {
@@ -56,9 +56,7 @@ class RecipeRepository implements RecipeRepositoryInterface {
     }
 
     public function findById(int $id) {
-        // return Recipe::find($id);
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->where('id', $id)->first();
-
+        return Recipe::with('user','images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->where('id', $id)->first();
     }
 
     public function update(array $requests, int $id) {
