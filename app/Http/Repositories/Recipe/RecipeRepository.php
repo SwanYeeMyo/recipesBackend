@@ -6,6 +6,7 @@ use App\Models\Direction;
 use App\Models\Image;
 use App\Models\Ingredient;
 use App\Models\Recipe;
+use App\Models\User;
 
 class RecipeRepository implements RecipeRepositoryInterface {
 
@@ -56,7 +57,9 @@ class RecipeRepository implements RecipeRepositoryInterface {
     }
 
     public function findById(int $id) {
-        return Recipe::with('user','images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->where('id', $id)->first();
+        $recipe = Recipe::with('user','images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('id', $id)->first();
+
+        return $recipe;
     }
 
     public function update(array $requests, int $id) {

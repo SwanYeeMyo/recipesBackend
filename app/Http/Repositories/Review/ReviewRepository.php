@@ -7,7 +7,7 @@ use App\Models\Review;
 class ReviewRepository implements ReviewRepositoryInterface {
 
     public function index() {
-        return Review::all();
+        return Review::with('user')->get();
     }
 
     public function store(array $request) {
@@ -16,7 +16,7 @@ class ReviewRepository implements ReviewRepositoryInterface {
 
     public function findById(int $id)
     {
-        return Review::find($id);
+        return Review::with('user')->where('id', $id)->first();
     }
 
     public function update(array $request, int $id) {

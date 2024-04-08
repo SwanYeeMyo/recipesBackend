@@ -5,7 +5,7 @@ use App\Models\Rating;
 
 class RatingRepository implements RatingRepositoryInterface {
     public function index() {
-        return Rating::all();
+        return Rating::with('user')->get();
     }
 
     public function store($request) {
@@ -14,7 +14,7 @@ class RatingRepository implements RatingRepositoryInterface {
 
     public function findById(int $id)
     {
-        return Rating::find($id);
+        return Rating::with('user')->where('id', $id)->first();
     }
 
     public function update($request, $id) {

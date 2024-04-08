@@ -13,7 +13,7 @@ class UserRepository implements UserRepositoryInterface
 {
     public function getUser(): Collection
     {
-        return User::with('roles')->get()->toBase();
+        return User::with('roles', 'ratings', 'reviews')->get()->toBase();
     }
 
     public function create(array $params): User
@@ -33,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function findUser($id): User
     {
-        return User::with('roles')->where('id', $id)->first();
+        return User::with('roles', 'ratings', 'reviews')->where('id', $id)->first();
     }
 
     public function update(array $params, $id)

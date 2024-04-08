@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('recipes', [RecipeApiController::class, 'index']);
+Route::get('recipes/{id}/detail', [RecipeApiController::class, 'show']);
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
@@ -43,7 +44,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('users/changePassword', [UserController::class, 'ChangePassword'])->name('users.changePassword');
 
     Route::post('recipes', [RecipeApiController::class, 'store']);
-    Route::get('recipes/{id}/detail', [RecipeApiController::class, 'show']);
     Route::post('recipes/{id}/update', [RecipeApiController::class, 'update']);
     Route::post('recipes/{id}/delete', [RecipeApiController::class, 'destroy']);
 
