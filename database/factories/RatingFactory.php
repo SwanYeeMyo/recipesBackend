@@ -19,7 +19,7 @@ class RatingFactory extends Factory
         return [
             'rating' => rand(1, 5),
             'recipe_id' => rand(1, 3),
-            'user_id' => rand(1, 15),
+            'user_id' => rand(1, 2),
         ];
     }
 }

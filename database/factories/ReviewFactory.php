@@ -19,7 +19,7 @@ class ReviewFactory extends Factory
         return [
             "comment" => $this->faker->paragraph(),
             "recipe_id" => $this->faker->numberBetween(1, 3),
-            "user_id" => $this->faker->numberBetween(1, 10),
+            "user_id" => $this->faker->numberBetween(1, 2),
         ];
     }
 }
