@@ -17,7 +17,7 @@ class DirectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'step' => $this->faker->name(),
+            'step' => $this->faker->sentence(),
             'recipe_id' => $this->faker->numberBetween(1, 3),
         ];
     }

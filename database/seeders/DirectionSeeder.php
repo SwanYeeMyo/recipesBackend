@@ -13,6 +13,6 @@ class DirectionSeeder extends Seeder
      */
     public function run(): void
     {
-        Direction::factory(20)->create();
+        Direction::factory(3)->create();
     }
 }

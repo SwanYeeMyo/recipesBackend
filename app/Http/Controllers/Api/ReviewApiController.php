@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseApiController;
 use App\Http\Repositories\Review\ReviewRepository;
 use App\Http\Requests\Review\ReviewRequest;
-use App\Models\Review;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
-class ReviewApiController extends Controller
+class ReviewApiController extends BaseApiController
 {
     private $reviewRepository;
     public function __construct(ReviewRepository $reviewRepository)
@@ -17,63 +16,40 @@ class ReviewApiController extends Controller
         // $this->middleware('auth');
         $this->reviewRepository = $reviewRepository;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        // if(!Gate::allows('review_list')){
-        //     return abort(401);
-        // }
-        $data = $this->reviewRepository->index();
-        return response()->json($data);
+        $reviews = $this->reviewRepository->index();
+        return $this->success($reviews, 'OK', 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ReviewRequest $request)
     {
-        // if(!Gate::allows('review_create')) {
-        //     return abort(401);
-        // }
-        $data = $this->reviewRepository->store($request);
-        return response()->json($data);
+        try {
+            $review = $this->reviewRepository->store($request->validated());
+            return $this->success($review, 'Created', 201);
+
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error("", $e->getMessage(), 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        // if(!Gate::allows('review_show')) {
-        //     return abort(401);
-        // }
-        $data = $this->reviewRepository->show($id);
-        return response()->json($data);
+        $review = $this->reviewRepository->findById($id);
+        return $this->success($review, 'OK', 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ReviewRequest $request, string $id)
+    public function update(ReviewRequest $request, int $id)
     {
-        // if(!Gate::allows('review_update')) {
-        //     return abort(401);
-        // }
-        $data = $this->reviewRepository->update($request, $id);
-        return response()->json($data, 200);
+        $review = $this->reviewRepository->update($request->validated(), $id);
+        return $this->success($review, 'Updated', 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        // if(!Gate::allows('review_delete')) {
-        //     return abort(401);
-        // }
-        $this->reviewRepository->destroy($id);
-        return response()->json(null, 204);
+        $review = $this->reviewRepository->destroy($id);
+        return $this->success($review, 'Deleted', 200);
     }
 }

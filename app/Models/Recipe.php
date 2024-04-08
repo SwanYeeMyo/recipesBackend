@@ -11,7 +11,7 @@ class Recipe extends Model
 
     protected $fillable = [
         'title', 'author_note', 'kitchen_note',
-        'cook_time', 'prep_time', 'serving', 'user_id',
+        'cook_time', 'prep_time', 'serving', 'type', 'user_id',
     ];
 
     public function images()
@@ -42,5 +42,10 @@ class Recipe extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

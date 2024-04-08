@@ -10,7 +10,7 @@ use App\Models\Recipe;
 class RecipeRepository implements RecipeRepositoryInterface {
 
     public function index() {
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions')->get();
+        return Recipe::with('images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->get();
     }
 
     public function store(array $requests) {
@@ -21,10 +21,11 @@ class RecipeRepository implements RecipeRepositoryInterface {
             "cook_time" => $requests['cook_time'],
             "prep_time" => $requests['prep_time'],
             "serving" => $requests['serving'],
+            "type" => $requests['type'],
             "user_id" => $requests['user_id'],
         ]);
 
-        $dish_type_ids = $requests['types'];
+        $dish_type_ids = $requests['dish_type'];
         $recipe->dish_types()->attach($dish_type_ids);
 
         foreach ($requests['ingredients'] as $ingredient) {
@@ -56,50 +57,46 @@ class RecipeRepository implements RecipeRepositoryInterface {
 
     public function findById(int $id) {
         // return Recipe::find($id);
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions')->where('id', $id)->first();
+        return Recipe::with('images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->where('id', $id)->first();
 
     }
 
-    // public function update(array $requests, int $id) {
-    //     $recipe = $this->findById($id);
+    public function update(array $requests, int $id) {
+        $recipe = $this->findById($id);
 
-    //     $recipe->update([
-    //         "title" => $requests['title'],
-    //         "author_note" => $requests['author_note'],
-    //         "kitchen_note" => $requests['kitchen_note'],
-    //         "cook_time" => $requests['cook_time'],
-    //         "prep_time" => $requests['prep_time'],
-    //         "serving" => $requests['serving'],
-    //         "user_id" => $requests['user_id'],
-    //     ]);
+        $recipe->update([
+            "title" => $requests['title'],
+            "author_note" => $requests['author_note'],
+            "kitchen_note" => $requests['kitchen_note'],
+            "cook_time" => $requests['cook_time'],
+            "prep_time" => $requests['prep_time'],
+            "serving" => $requests['serving'],
+            "type" => $requests['type'],
+            "user_id" => $requests['user_id'],
+        ]);
 
-    //     $dish_type_ids = $requests['types'];
-    //     $recipe->dish_types()->sync($dish_type_ids);
-    //     // sync function replace old data with new ones
+        $dish_type_ids = $requests['dish_type'];
+        $recipe->dish_types()->sync($dish_type_ids);
+        // sync function replace old data with new ones
 
-    //     // foreach ($requests['ingredients'] as $ingredientData) {
-    //     //     // dd($ingredientData);
-    //     //     $ingredient = Ingredient::find($ingredientData['recipe_id']);
-    //     //     $ingredient->update([
-    //     //         'qty' => $ingredientData['qty'],
-    //     //         'measurement' => $ingredientData['measurement'],
-    //     //         'name' => $ingredientData['name'],
-    //     //         'recipe_id' => $recipe->id,
-    //     //     ]);
-    //     // }
+        $recipe->ingredients()->delete();
+        foreach ($requests['ingredients'] as $ingredient) {
+            $recipe->ingredients()->create([
+                'qty' => $ingredient['qty'],
+                'measurement' => $ingredient['measurement'],
+                'name' => $ingredient['name'],
+            ]);
+        }
 
-    //     // dd($requests['steps']);
-    //     foreach($requests['steps'] as $stepData) {
-    //         dd($stepData);
-    //         $step = Direction::find($stepData['recipe_id']);
-    //         $step->update([
-    //             'step' => $stepData['step'],
-    //             'recipe_id' => $recipe->id,
-    //         ]);
-    //     }
+        $recipe->directions()->delete();
+        foreach ($requests['steps'] as $step) {
+            $recipe->directions()->create([
+                'step' => $step,
+            ]);
+        }
 
-    //     return $recipe;
-    // }
+        return $recipe;
+    }
 
     public function delete(int $id) {
         Recipe::find($id)->delete();
