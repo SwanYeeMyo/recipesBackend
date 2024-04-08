@@ -11,11 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recipe_has_dish_types', function (Blueprint $table) {
-            // $table->id();
+        Schema::create('dish_type_recipe', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('dish_type_id');
             $table->unsignedBigInteger('recipe_id');
-            $table->unsignedBigInteger('dish_type');
-            $table->timestamps();
+
+            // Define foreign key constraints
+            $table->foreign('dish_type_id')->references('id')->on('dish_types')->onDelete('cascade');
+            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
+
+            // Define primary key (composite key)
+            $table->primary(['dish_type_id', 'recipe_id']);
         });
     }
 
@@ -24,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recipe_has_dish_types');
+        Schema::dropIfExists('dish_type_recipe');
     }
 };
