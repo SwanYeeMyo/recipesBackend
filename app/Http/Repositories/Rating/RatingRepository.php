@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Repositories\Rating;
 
-use App\Models\Rating; 
+use App\Models\Rating;
 
 class RatingRepository implements RatingRepositoryInterface {
     public function index() {
@@ -10,7 +10,7 @@ class RatingRepository implements RatingRepositoryInterface {
     }
     public function store($request) {
        return $data = Rating::create($request->all());
-    }
+    } 
     public function show($id) {
         return $data = Rating::find($id);
     }
