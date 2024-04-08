@@ -28,13 +28,14 @@ class UpdateRequest extends FormRequest
             'cook_time' => ['required','integer'],
             'prep_time' => ['required', 'integer'],
             'serving' => ['required', 'integer'],
-            'types' => ['required', 'array'],
-            'types.*' => ['exists:dish_types,id'], // Ensure each ID exists in the dish_types table
+            'dish_type' => ['required', 'array'],
+            'dish_type.*' => ['exists:dish_types,id'], // Ensure each ID exists in the dish_types table
             'user_id' => ['required', 'integer'],
             'images.*' => ['image', 'mimes:jpeg,png,jpg,gif','max:2048'],
             'ingredients' => ['required', 'array'],
             'ingredients.*' => ['required'],
             'steps' => ['required', 'array'],
+            'type' => ['required', 'string'],
         ];
     }
 }

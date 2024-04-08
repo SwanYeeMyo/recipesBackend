@@ -11,7 +11,7 @@ class Recipe extends Model
 
     protected $fillable = [
         'title', 'author_note', 'kitchen_note',
-        'cook_time', 'prep_time', 'serving', 'user_id',
+        'cook_time', 'prep_time', 'serving', 'type', 'user_id',
     ];
 
     public function images()

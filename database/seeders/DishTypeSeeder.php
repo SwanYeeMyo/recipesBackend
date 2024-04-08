@@ -13,7 +13,7 @@ class DishTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $types = [
+        $dish_types = [
             "Breakfast",
             "Luch",
             "Dinner",
@@ -25,7 +25,7 @@ class DishTypeSeeder extends Seeder
             "European",
         ];
 
-        foreach($types as $type) {
+        foreach($dish_types as $type) {
             DishType::create([
                 'name' => $type,
             ]);

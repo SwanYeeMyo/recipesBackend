@@ -23,6 +23,7 @@ class RecipeFactory extends Factory
             "cook_time" => rand(5, 45),
             "prep_time" => random_int(5, 15),
             "serving" => rand(1, 10),
+            "type" => "free",
             "user_id" => rand(1, 10),
         ];
     }

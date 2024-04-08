@@ -10,7 +10,7 @@ use App\Models\Recipe;
 class RecipeRepository implements RecipeRepositoryInterface {
 
     public function index() {
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions')->get();
+        return Recipe::with('images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->get();
     }
 
     public function store(array $requests) {
@@ -21,10 +21,11 @@ class RecipeRepository implements RecipeRepositoryInterface {
             "cook_time" => $requests['cook_time'],
             "prep_time" => $requests['prep_time'],
             "serving" => $requests['serving'],
+            "type" => $requests['type'],
             "user_id" => $requests['user_id'],
         ]);
 
-        $dish_type_ids = $requests['types'];
+        $dish_type_ids = $requests['dish_type'];
         $recipe->dish_types()->attach($dish_type_ids);
 
         foreach ($requests['ingredients'] as $ingredient) {
@@ -56,7 +57,7 @@ class RecipeRepository implements RecipeRepositoryInterface {
 
     public function findById(int $id) {
         // return Recipe::find($id);
-        return Recipe::with('images', 'dish_types', 'ingredients', 'directions')->where('id', $id)->first();
+        return Recipe::with('images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->where('id', $id)->first();
 
     }
 
@@ -70,13 +71,13 @@ class RecipeRepository implements RecipeRepositoryInterface {
             "cook_time" => $requests['cook_time'],
             "prep_time" => $requests['prep_time'],
             "serving" => $requests['serving'],
+            "type" => $requests['type'],
             "user_id" => $requests['user_id'],
         ]);
 
-        $dish_type_ids = $requests['types'];
+        $dish_type_ids = $requests['dish_type'];
         $recipe->dish_types()->sync($dish_type_ids);
         // sync function replace old data with new ones
-
 
         $recipe->ingredients()->delete();
         foreach ($requests['ingredients'] as $ingredient) {
