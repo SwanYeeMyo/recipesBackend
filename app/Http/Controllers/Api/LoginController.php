@@ -22,6 +22,7 @@ class LoginController extends BaseApiController
                 return $this->success($user, 'Login Success', 201);
             } catch (Exception $e) {
                 Log::error($e->getMessage());
+
                 return $this->error($user, '', 500);
             }
         } else {

@@ -15,6 +15,10 @@ class PermissionTableSeeder extends Seeder
     {
         $data = [
             [
+                'name' => 'super admin',
+                'guard_name' => 'web',
+            ],
+            [
                 'name' => 'admin',
                 'guard_name' => 'web',
             ],

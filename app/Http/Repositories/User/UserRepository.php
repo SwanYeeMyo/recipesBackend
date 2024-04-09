@@ -52,10 +52,20 @@ class UserRepository implements UserRepositoryInterface
 
             $params['image'] = $imageName;
         }
-        $role = Role::where('id', $params['role_id'])->first();
+
         $user = User::find($id);
+
+        if (isset($params['role_id'])) {
+            $role = Role::find($params['role_id']);
+            if (!$role) {
+                return response()->json(['error' => 'Role not found'], 404);
+            }
+            $user->syncRoles($role);
+        }
+
         $user->update($params);
-        return $user->syncRoles($role);
+        $user->load('roles');
+        return $user;
     }
 
     public function delete($id)

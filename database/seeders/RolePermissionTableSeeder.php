@@ -14,15 +14,21 @@ class RolePermissionTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminPermission = Permission::where('name', 'admin')->pluck('name');
+        $superadminPermission = Permission::where('name', 'super admin')->pluck('name');
 
         $role1 = Role::find(1);
 
-        $role1->syncPermissions($adminPermission);
+        $role1->syncPermissions($superadminPermission);
+
+        $adminPermission = Permission::where('name', 'admin')->pluck('name');
+
+        $role2 = Role::find(2);
+
+        $role2->syncPermissions($adminPermission);
 
         $userPermission = Permission::where('name', 'user')->pluck('name');
 
-        $role2 = Role::find(2);
+        $role2 = Role::find(3);
 
         $role2->syncPermissions($userPermission);
     }

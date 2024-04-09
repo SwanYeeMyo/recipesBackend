@@ -13,10 +13,13 @@ class UserRoleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::where('email', 'admin@gmail.com')->first();
+        $admin = User::where('email', 'superadmin@gmail.com')->first();
         $admin->syncRoles(1);
 
-        $user = User::where('email', 'user@gmail.com')->first();
+        $user = User::where('email', 'admin@gmail.com')->first();
         $user->syncRoles(2);
+
+        $user = User::where('email', 'user@gmail.com')->first();
+        $user->syncRoles(3);
     }
 }
