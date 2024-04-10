@@ -14,7 +14,8 @@ class RecipeApiController extends BaseApiController
 {
     private $recipeService;
 
-    public function __construct(RecipeService $recipeService) {
+    public function __construct(RecipeService $recipeService)
+    {
 
         $this->recipeService = $recipeService;
     }
@@ -32,7 +33,6 @@ class RecipeApiController extends BaseApiController
             // dd($request->all());
             $recipe = $this->recipeService->store($request->validated());
             return $this->success($recipe, 'Created', 201);
-
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return $this->error("", $e->getMessage(), 500);
@@ -70,6 +70,43 @@ class RecipeApiController extends BaseApiController
 
     public function search(Request $request)
     {
-        return $this->recipeService->search($request->name);
+        try {
+            $recipe = $this->recipeService->search($request->name);
+            return $this->success($recipe, 'ok', 200);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error($recipe, '', 500);
+        }
+        // return $this->recipeService->search($request->name);
+    }
+    public function getVegan()
+    {
+        try {
+            $recipe = $this->recipeService->vegan();
+            return $this->success($recipe, 'ok', 200);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error($recipe, '', 500);
+        }
+    }
+    public function getMeal()
+    {
+        try {
+            $recipe = $this->recipeService->meal();
+            return $this->success($recipe, 'ok', 200);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error($recipe, '', 500);
+        }
+    }
+    public function GetSoup()
+    {
+        try {
+            $recipe = $this->recipeService->soup();
+            return $this->success($recipe, 'ok', 200);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error($recipe, '', 500);
+        }
     }
 }
