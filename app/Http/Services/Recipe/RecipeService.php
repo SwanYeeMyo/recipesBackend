@@ -78,4 +78,8 @@ class RecipeService {
     public function delete(int $id) {
         $this->recipeRepository->delete($id);
     }
+
+    public function search(string $name) {
+        return $this->recipeRepository->search($name);
+    }
 }

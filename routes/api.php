@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('recipes', [RecipeApiController::class, 'index']);
 Route::get('recipes/{id}/detail', [RecipeApiController::class, 'show']);
+Route::post('recipes/search', [RecipeApiController::class, 'search']);
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);

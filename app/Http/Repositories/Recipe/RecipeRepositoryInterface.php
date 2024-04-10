@@ -15,4 +15,6 @@ interface RecipeRepositoryInterface {
     public function update(array $requests, int $id);
 
     public function delete(int $id);
+
+    public function search(string $name);
 }
