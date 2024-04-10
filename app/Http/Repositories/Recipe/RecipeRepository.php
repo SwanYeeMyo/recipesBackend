@@ -102,5 +102,23 @@ class RecipeRepository implements RecipeRepositoryInterface {
     public function delete(int $id) {
         Recipe::find($id)->delete();
     }
+
+    public function search(string $name) {
+
+        // $recipes = Recipe::with('dish_types')
+        //     ->whereHas('dish_types', function($query) use ($name) {
+        //     $query->where('name', $name);
+        // })->get();
+        $recipes = Recipe::with('dish_types')
+        ->where(function($query) use ($name) {
+            $query->where('title', 'like', '%' . $name . '%')
+                  ->orWhereHas('dish_types', function($q) use ($name) {
+                      $q->where('name', $name);
+                  });
+        })
+        ->get();
+
+        return $recipes;
+    }
 }
 

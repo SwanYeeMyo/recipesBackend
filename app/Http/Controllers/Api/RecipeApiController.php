@@ -8,6 +8,7 @@ use App\Http\Controllers\BaseApiController;
 use App\Http\Requests\Recipe\UpdateRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class RecipeApiController extends BaseApiController
 {
@@ -65,5 +66,10 @@ class RecipeApiController extends BaseApiController
             Log::error($e->getMessage());
             return $this->error($recipe, '', 500);
         }
+    }
+
+    public function search(Request $request)
+    {
+        return $this->recipeService->search($request->name);
     }
 }
