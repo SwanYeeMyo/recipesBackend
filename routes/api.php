@@ -31,6 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('filterDishTypes', [DishTypeApiController::class, 'index']);
 Route::get('recipes', [RecipeApiController::class, 'index']);
 Route::get('recipes/{id}/detail', [RecipeApiController::class, 'show']);
 Route::post('recipes/search', [RecipeApiController::class, 'search']);
