@@ -7,20 +7,24 @@ use App\Models\Review;
 class ReviewRepository implements ReviewRepositoryInterface {
 
     public function index() {
-        return $data = Review::all();
+        return Review::with('user')->get();
     }
-    public function store($request) {
-        return $data = Review::create($request->all());
+
+    public function store(array $request) {
+        return Review::create($request);
     }
-    public function show($id) {
-        return $data = Review::find($id);
+
+    public function findById(int $id)
+    {
+        return Review::with('user')->where('id', $id)->first();
     }
-    public function update($request, $id) {
+
+    public function update(array $request, int $id) {
         $data = Review::find($id);
-        $data->update($request->all());
+        $data->update($request);
         return $data;
     }
-    public function destroy($id) {
+    public function destroy(int $id) {
         Review::find($id)->delete();
     }
 }

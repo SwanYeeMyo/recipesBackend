@@ -8,21 +8,19 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(UserTableSeeder::class);
+        $this->call(RoleTableSeeder::class);
+        $this->call(PermissionTableSeeder::class);
+        $this->call(RolePermissionTableSeeder::class);
+        $this->call(UserRoleTableSeeder::class);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-        $this->call(RatingSeeder::class);
-        $this->call(ReviewSeeder::class);
+        $this->call(RecipeSeeder::class);
+        $this->call(DishTypeSeeder::class);
         $this->call(IngredientSeeder::class);
         $this->call(DirectionSeeder::class);
-
+        $this->call(RatingSeeder::class);
+        $this->call(ReviewSeeder::class);
     }
 }

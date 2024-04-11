@@ -20,9 +20,9 @@ return new class extends Migration
             $table->integer('cook_time');
             $table->integer('prep_time');
             $table->integer('serving');
-            $table->string('type')->default('free');
+            $table->string('type');
             $table->unsignedBigInteger('user_id');
-
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

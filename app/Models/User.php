@@ -29,6 +29,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
+        'gender',
+        'type',
     ];
 
     /**
@@ -60,4 +63,19 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

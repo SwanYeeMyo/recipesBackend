@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
+
     protected $fillable = [
        'recipe_id', 'user_id', 'comment'
     ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
+
     public function recipe() {
         return $this->belongsTo(Recipe::class);
     }
