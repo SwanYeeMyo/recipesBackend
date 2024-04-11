@@ -112,11 +112,6 @@ class RecipeRepository implements RecipeRepositoryInterface
 
     public function search(string $name)
     {
-
-        // $recipes = Recipe::with('dish_types')
-        //     ->whereHas('dish_types', function($query) use ($name) {
-        //     $query->where('name', $name);
-        // })->get();
         $recipes = Recipe::with('dish_types', 'images', 'user')
             ->where(function ($query) use ($name) {
                 $query->where('title', 'like', '%' . $name . '%')
@@ -128,9 +123,9 @@ class RecipeRepository implements RecipeRepositoryInterface
 
         return $recipes;
     }
+
     public function vegan()
     {
-        // $recipe = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('dish_types.name', "vegan")->get()->limit(4);
         $recipes = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')
             ->whereHas('dish_types', function ($query) {
                 $query->where('name', 'Vegan');
@@ -139,9 +134,9 @@ class RecipeRepository implements RecipeRepositoryInterface
             ->get();
         return $recipes;
     }
+
     public function meal()
     {
-        // $recipe = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('dish_types.name', "vegan")->get()->limit(4);
         $recipes = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')
             ->whereHas('dish_types', function ($query) {
                 $query->where('name', 'Meal');
@@ -150,9 +145,9 @@ class RecipeRepository implements RecipeRepositoryInterface
             ->get();
         return $recipes;
     }
+
     public function soup()
     {
-        // $recipe = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('dish_types.name', "vegan")->get()->limit(4);
         $recipes = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')
             ->whereHas('dish_types', function ($query) {
                 $query->where('name', 'Soup');
