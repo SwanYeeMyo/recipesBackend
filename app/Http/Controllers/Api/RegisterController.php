@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Http\Controllers\BaseApiController;
 use App\Http\Requests\Account\RegisterRequest;
+use Exception;
 
 class RegisterController extends BaseApiController
 {
