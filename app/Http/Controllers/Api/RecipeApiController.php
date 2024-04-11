@@ -28,7 +28,7 @@ class RecipeApiController extends BaseApiController
     }
 
     public function store(StoreRequest $request)
-    {
+    { 
         try {
             // dd($request->all());
             $recipe = $this->recipeService->store($request->validated());
