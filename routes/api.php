@@ -34,6 +34,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('recipes', [RecipeApiController::class, 'index']);
 Route::get('recipes/{id}/detail', [RecipeApiController::class, 'show']);
 Route::post('recipes/search', [RecipeApiController::class, 'search']);
+Route::get('recipes/vegan', [RecipeApiController::class, 'getVegan']);
+Route::get('recipes/meal', [RecipeApiController::class, 'getMeal']);
+Route::get('recipes/soup', [RecipeApiController::class, 'getSoup']);
+
 
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
@@ -50,9 +54,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('ratings', RatingApiController::class);
     Route::resource('reviews', ReviewApiController::class);
-    Route::resource('ingredients',IngredientApiController::class);
+    Route::resource('ingredients', IngredientApiController::class);
     Route::resource('directions', DirectionApiController::class);
     Route::resource('dishTypes', DishTypeApiController::class);
 });
-
-

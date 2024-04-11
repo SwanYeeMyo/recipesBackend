@@ -2,7 +2,8 @@
 
 namespace App\Http\Repositories\Recipe;
 
-interface RecipeRepositoryInterface {
+interface RecipeRepositoryInterface
+{
 
     public function index();
 
@@ -17,4 +18,7 @@ interface RecipeRepositoryInterface {
     public function delete(int $id);
 
     public function search(string $name);
+    public function vegan();
+    public function meal();
+    public function soup();
 }

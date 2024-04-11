@@ -8,13 +8,16 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\User;
 
-class RecipeRepository implements RecipeRepositoryInterface {
+class RecipeRepository implements RecipeRepositoryInterface
+{
 
-    public function index() {
+    public function index()
+    {
         return Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings', 'reviews')->get();
     }
 
-    public function store(array $requests) {
+    public function store(array $requests)
+    {
         $recipe = Recipe::create([
             "title" => $requests['title'],
             "author_note" => $requests['author_note'],
@@ -39,7 +42,7 @@ class RecipeRepository implements RecipeRepositoryInterface {
             ]);
         }
 
-        foreach($requests['steps'] as $step) {
+        foreach ($requests['steps'] as $step) {
             Direction::create([
                 'step' => $step,
                 'recipe_id' => $recipe->id,
@@ -49,20 +52,23 @@ class RecipeRepository implements RecipeRepositoryInterface {
         return $recipe;
     }
 
-    public function recipeImage($name, $recipe_id) {
+    public function recipeImage($name, $recipe_id)
+    {
         Image::create([
             "name" => $name,
             "recipe_id" => $recipe_id,
         ]);
     }
 
-    public function findById(int $id) {
-        $recipe = Recipe::with('user','images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('id', $id)->first();
+    public function findById(int $id)
+    {
+        $recipe = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('id', $id)->first();
 
         return $recipe;
     }
 
-    public function update(array $requests, int $id) {
+    public function update(array $requests, int $id)
+    {
         $recipe = $this->findById($id);
 
         $recipe->update([
@@ -99,21 +105,55 @@ class RecipeRepository implements RecipeRepositoryInterface {
         return $recipe;
     }
 
-    public function delete(int $id) {
+    public function delete(int $id)
+    {
         Recipe::find($id)->delete();
     }
 
-    public function search(string $name) {
-
-        $recipes = Recipe::with('dish_types')
+    public function search(string $name)
+    {
+        $recipes = Recipe::with('dish_types', 'images', 'user')
             ->where(function ($query) use ($name) {
                 $query->where('title', 'like', '%' . $name . '%')
                     ->orWhereHas('dish_types', function ($q) use ($name) {
                         $q->where('name', $name);
                     });
-            })->get();
+            })
+            ->get();
 
         return $recipes;
     }
-}
 
+    public function vegan()
+    {
+        $recipes = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')
+            ->whereHas('dish_types', function ($query) {
+                $query->where('name', 'Vegan');
+            })
+            ->limit(4)
+            ->get();
+        return $recipes;
+    }
+
+    public function meal()
+    {
+        $recipes = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')
+            ->whereHas('dish_types', function ($query) {
+                $query->where('name', 'Meal');
+            })
+            ->limit(4)
+            ->get();
+        return $recipes;
+    }
+
+    public function soup()
+    {
+        $recipes = Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')
+            ->whereHas('dish_types', function ($query) {
+                $query->where('name', 'Soup');
+            })
+            ->limit(4)
+            ->get();
+        return $recipes;
+    }
+}
