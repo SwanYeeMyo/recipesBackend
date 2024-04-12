@@ -112,7 +112,7 @@ class RecipeRepository implements RecipeRepositoryInterface
 
     public function search(string $name)
     {
-        $recipes = Recipe::with('dish_types', 'images', 'user')
+        $recipes = Recipe::with('dish_types', 'images', 'user', 'ratings')
             ->where(function ($query) use ($name) {
                 $query->where('title', 'like', '%' . $name . '%')
                     ->orWhereHas('dish_types', function ($q) use ($name) {
