@@ -31,7 +31,7 @@ class StoreRequest extends FormRequest
             'dish_type' => ['required', 'array'],
             'dish_type.*' => ['exists:dish_types,id'], // Ensure each ID exists in the dish_types table
             'user_id' => ['required', 'integer'],
-            'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'images.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4000'],
             'ingredients' => ['required', 'array'],
             'ingredients.*' => ['required'],
             'steps' => ['required', 'array'],
