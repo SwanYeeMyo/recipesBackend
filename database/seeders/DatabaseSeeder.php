@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call(RolePermissionTableSeeder::class);
         $this->call(UserRoleTableSeeder::class);
 
-        $this->call(RecipeSeeder::class);
+        // $this->call(RecipeSeeder::class);
         $this->call(DishTypeSeeder::class);
-        $this->call(IngredientSeeder::class);
-        $this->call(DirectionSeeder::class);
-        $this->call(RatingSeeder::class);
-        $this->call(ReviewSeeder::class);
+        // // $this->call(IngredientSeeder::class);
+        // $this->call(DirectionSeeder::class);
+        // $this->call(RatingSeeder::class);
+        // $this->call(ReviewSeeder::class);
     }
 }
