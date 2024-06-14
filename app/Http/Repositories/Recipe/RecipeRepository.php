@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeRepository implements RecipeRepositoryInterface
 {
@@ -155,5 +156,11 @@ class RecipeRepository implements RecipeRepositoryInterface
             ->limit(4)
             ->get();
         return $recipes;
+    }
+
+    public function showRecipe()
+    {
+
+        return  Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('user_id', Auth::user()->id)->get();
     }
 }

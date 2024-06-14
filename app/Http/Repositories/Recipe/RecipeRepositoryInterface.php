@@ -18,7 +18,12 @@ interface RecipeRepositoryInterface
     public function delete(int $id);
 
     public function search(string $name);
+
     public function vegan();
+
     public function meal();
+
     public function soup();
+
+    public function showRecipe();
 }

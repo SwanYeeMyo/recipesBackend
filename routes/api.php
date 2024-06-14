@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('recipes', [RecipeApiController::class, 'store']);
     Route::post('recipes/{id}/update', [RecipeApiController::class, 'update']);
     Route::post('recipes/{id}/delete', [RecipeApiController::class, 'destroy']);
+    Route::get('user-recipes', [RecipeApiController::class, 'showRecipe']);
 
     Route::resource('ratings', RatingApiController::class);
     Route::resource('reviews', ReviewApiController::class);

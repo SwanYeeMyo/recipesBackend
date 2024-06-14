@@ -103,4 +103,9 @@ class RecipeService
     {
         return $this->recipeRepository->soup();
     }
+    public function showRecipe()
+    {
+
+        return $this->recipeRepository->showRecipe();
+    }
 }

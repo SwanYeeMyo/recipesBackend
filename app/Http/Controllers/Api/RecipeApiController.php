@@ -28,7 +28,7 @@ class RecipeApiController extends BaseApiController
     }
 
     public function store(StoreRequest $request)
-    { 
+    {
         try {
             // dd($request->all());
             $recipe = $this->recipeService->store($request->validated());
@@ -106,6 +106,16 @@ class RecipeApiController extends BaseApiController
             return $this->success($recipe, 'ok', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
+            return $this->error($recipe, '', 500);
+        }
+    }
+    public function showRecipe()
+    {
+        try {
+            $recipe = $this->recipeService->showRecipe();
+            return $this->success($recipe, 'success', 200);
+        } catch (Exception $e) {
+            log::error($e->getMessage());
             return $this->error($recipe, '', 500);
         }
     }
