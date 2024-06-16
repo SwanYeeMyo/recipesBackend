@@ -68,12 +68,11 @@ class RecipeRepository implements RecipeRepositoryInterface
         return $recipe;
     }
 
-    public function update( $requests, int $id)
+    public function update($requests, int $id)
     {
         // dd($requests->toArray());
 
         $recipe = $this->findById($id);
-
 
         $recipe->update([
             "title" => $requests['title'],
@@ -164,6 +163,6 @@ class RecipeRepository implements RecipeRepositoryInterface
     public function showRecipe()
     {
 
-        return  Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('user_id', Auth::user()->id)->get();
+        return Recipe::with('user', 'images', 'dish_types', 'ingredients', 'directions', 'ratings.user', 'reviews.user')->where('user_id', Auth::user()->id)->get();
     }
 }

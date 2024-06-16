@@ -59,20 +59,33 @@ class RecipeService
 
     public function update($requests, int $id)
     {
-
         $recipe = $this->recipeRepository->update($requests, $id);
 
         $oldImages = Image::where('recipe_id', $id)->get();
 
-        $exist = \in_array($oldImages, $requests->images);
+        $oldImagesCheck = [];
+        $images = [];
 
-        if (!$exist) {
+        if (isset($requests['images'])) {
+            foreach ($requests['images'] as $image) {
+
+                array_push($images, $image->getClientOriginalName());
+            }
+        }
+        foreach ($oldImages as $image) {
+            array_push($oldImagesCheck, $image->name);
+        }
+
+        sort($images);
+        sort($oldImagesCheck);
+
+        if ($images !== $oldImagesCheck) {
             if (isset($requests['images'])) {
                 foreach ($oldImages as $image) {
                     if (File::exists(public_path('recipe_img/' . $image->name))) {
                         File::delete(public_path('recipe_img/' . $image->name));
                     }
-                    // Delete images in DB
+
                     $image->delete();
                 }
 

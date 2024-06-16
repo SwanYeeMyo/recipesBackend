@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Recipe\StoreRequest;
-use App\Http\Services\Recipe\RecipeService;
 use App\Http\Controllers\BaseApiController;
+use App\Http\Requests\Recipe\StoreRequest;
 use App\Http\Requests\Recipe\UpdateRequest;
+use App\Http\Services\Recipe\RecipeService;
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Request;
 
 class RecipeApiController extends BaseApiController
 {
@@ -47,11 +46,10 @@ class RecipeApiController extends BaseApiController
         return $recipe ? $this->success($recipe, 'OK', 200) : $this->error($recipe, 'Id Not Found', 404);
     }
 
-    public function update(Request $request, int $id)
+    public function update(UpdateRequest $request, int $id)
     {
         try {
-
-            $recipe = $this->recipeService->update($request, $id);
+            $recipe = $this->recipeService->update($request->validated(), $id);
             return $this->success($recipe, 'Updated', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
