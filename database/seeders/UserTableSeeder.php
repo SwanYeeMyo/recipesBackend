@@ -18,21 +18,21 @@ class UserTableSeeder extends Seeder
             'name' => 'super admin',
             'email' => 'superadmin@gmail.com',
             'type' => 'premium',
-            'password' => Hash::make('pyaesone'),
+            'password' => Hash::make('password'),
         ]);
 
         User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'type' => 'premium',
-            'password' => Hash::make('pyaesone'),
+            'password' => Hash::make('password'),
             'type' => 'premium'
         ]);
 
         User::create([
             'name' => 'user',
             'email' => 'user@gmail.com',
-            'password' => Hash::make('pyaesone'),
+            'password' => Hash::make('password'),
         ]);
     }
 }
