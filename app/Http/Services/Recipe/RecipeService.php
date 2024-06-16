@@ -57,29 +57,34 @@ class RecipeService
         return $uploadImages;
     }
 
-    public function update(array $requests, int $id)
+    public function update($requests, int $id)
     {
 
         $recipe = $this->recipeRepository->update($requests, $id);
 
-        if (isset($requests['images'])) {
-            // Delete Old Images in File
-            $oldImages = Image::where('recipe_id', $id)->get();
-            foreach ($oldImages as $image) {
-                if (File::exists(public_path('recipe_img/' . $image->name))) {
-                    File::delete(public_path('recipe_img/' . $image->name));
+        $oldImages = Image::where('recipe_id', $id)->get();
+
+        $exist = \in_array($oldImages, $requests->images);
+
+        if (!$exist) {
+            if (isset($requests['images'])) {
+                foreach ($oldImages as $image) {
+                    if (File::exists(public_path('recipe_img/' . $image->name))) {
+                        File::delete(public_path('recipe_img/' . $image->name));
+                    }
+                    // Delete images in DB
+                    $image->delete();
                 }
-                // Delete images in DB
-                $image->delete();
-            }
 
-            $images = $this->upload_images($requests);
+                $images = $this->upload_images($requests);
 
-            foreach ($images as $image) {
-                $this->recipeRepository->recipeImage($image, $recipe->id);
+                foreach ($images as $image) {
+                    $this->recipeRepository->recipeImage($image, $recipe->id);
+                }
             }
         }
         return $recipe;
+
     }
 
     public function delete(int $id)

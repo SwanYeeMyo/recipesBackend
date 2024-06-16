@@ -68,9 +68,12 @@ class RecipeRepository implements RecipeRepositoryInterface
         return $recipe;
     }
 
-    public function update(array $requests, int $id)
+    public function update( $requests, int $id)
     {
+        // dd($requests->toArray());
+
         $recipe = $this->findById($id);
+
 
         $recipe->update([
             "title" => $requests['title'],

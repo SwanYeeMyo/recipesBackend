@@ -41,15 +41,17 @@ class RecipeApiController extends BaseApiController
 
     public function show(int $id)
     {
+
         $recipe = $this->recipeService->findById($id);
 
         return $recipe ? $this->success($recipe, 'OK', 200) : $this->error($recipe, 'Id Not Found', 404);
     }
 
-    public function update(UpdateRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
         try {
-            $recipe = $this->recipeService->update($request->validated(), $id);
+
+            $recipe = $this->recipeService->update($request, $id);
             return $this->success($recipe, 'Updated', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
